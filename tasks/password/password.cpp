@@ -1,4 +1,5 @@
 #include <string>
+#include <vector>
 #include "password.h"
 
 bool IsDigit(const char &c) {
@@ -20,10 +21,7 @@ bool ValidatePassword(const std::string& password) {
         return false;
     }
 
-    bool has_type[4];
-    for (size_t i = 0; i < 4; ++i) {
-        has_type[i] = false;
-    }
+    std::vector<bool> has_type(4, false);
 
     for (const char& c : password) {
         if (IsDigit(c)) {
