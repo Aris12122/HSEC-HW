@@ -1,5 +1,3 @@
-#include <algorithm>
-#include <vector>
 #include "password.h"
 
 bool IsDigit(const char &c) {
@@ -21,7 +19,7 @@ bool ValidatePassword(const std::string& password) {
         return false;
     }
 
-    std::vector<bool> has_type(4, false);
+    bool has_type[4];
     for (const char& c : password) {
         if (IsDigit(c)) {
             has_type[0] = true;
@@ -35,5 +33,9 @@ bool ValidatePassword(const std::string& password) {
             return false;
         }
     }
-    return std::count(begin(has_type), end(has_type), true) >= 3;
+    int cnt = 0;
+    for (size_t i = 0; i < 4; ++i) {
+        cnt += static_cast<int>(has_type[i]);
+    }
+    return cnt >= 3;
 }
