@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <vector>
 #include "password.h"
 
 bool IsDigit(const char &c) {
@@ -13,29 +14,26 @@ bool IsUpper(const char &c) {
     return 'A' <= c && c <= 'Z';
 }
 
-bool InAscii(int c) {
-    return 33 <= c && c <= 126;
-}
-
 
 bool ValidatePassword(const std::string& password) {
-    if (password.length() < 8 || 14 < password.length()) {
+    int n = password.size();
+    if (n < 8 || n > 14) {
         return false;
     }
-    bool has_type[4];
-    std::fill(has_type, has_type + 4, false);
-    for (const char &c : password) {
+
+    std::vector<bool> has_type(4, false);
+    for (const char& c : password) {
         if (IsDigit(c)) {
             has_type[0] = true;
         } else if (IsLower(c)) {
             has_type[1] = true;
         } else if (IsUpper(c)) {
             has_type[2] = true;
-        } else if (InAscii(static_cast<int>(c))) {
+        } else if (static_cast<char>(33) <= c && c <= static_cast<char>(126)) {
             has_type[3] = true;
         } else {
             return false;
         }
     }
-    return std::count(has_type, has_type + 4, true) >= 3;
+    return std::count(begin(has_type), end(has_type), true) >= 3;
 }
