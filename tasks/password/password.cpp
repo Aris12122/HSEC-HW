@@ -20,6 +20,10 @@ bool ValidatePassword(const std::string& password) {
     }
 
     bool has_type[4];
+    for (size_t i = 0; i < 4; ++i) {
+        has_type[i] = false;
+    }
+
     for (const char& c : password) {
         if (IsDigit(c)) {
             has_type[0] = true;
