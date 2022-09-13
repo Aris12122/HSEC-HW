@@ -1,5 +1,22 @@
-#include <cctype>
+#include <algorithm>
 #include "password.h"
+
+bool IsDigit(const char &c) {
+    return '0' <= c && c <= '9';
+}
+
+bool IsLower(const char &c) {
+    return 'a' <= c && c <= 'z';
+}
+
+bool IsUpper(const char &c) {
+    return 'A' <= c && c <= 'Z';
+}
+
+bool InAscii(int c) {
+    return 33 <= c && c <= 126;
+}
+
 
 bool ValidatePassword(const std::string& password) {
     if (password.length() < 8 || 14 < password.length()) {
@@ -8,14 +25,13 @@ bool ValidatePassword(const std::string& password) {
     bool has_type[4];
     std::fill(has_type, has_type + 4, false);
     for (const char &c : password) {
-        int ic = static_cast<int>(c);
-        if (std::isdigit(ic)) {
+        if (IsDigit(c)) {
             has_type[0] = true;
-        } else if (std::islower(ic)) {
+        } else if (IsLower(c)) {
             has_type[1] = true;
-        } else if (std::isupper(ic)) {
+        } else if (IsUpper(c)) {
             has_type[2] = true;
-        } else if (33 <= ic && ic <= 126) {
+        } else if (InAscii(static_cast<int>(c))) {
             has_type[3] = true;
         } else {
             return false;
