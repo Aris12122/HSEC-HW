@@ -2,7 +2,10 @@
 #include <cctype>
 
 bool ValidatePassword(const std::string& password) {
-    if (14 < password.length() || password.length() < 8) {
+    const size_t min_password_len = static_cast<size_t>(8);
+    const size_t max_password_len = static_cast<size_t>(14);
+
+    if (max_password_len < password.length() || password.length() < min_password_len) {
         return false;
     }
 
@@ -11,8 +14,11 @@ bool ValidatePassword(const std::string& password) {
         has_type[i] = false;
     }
 
+    const char min_ascii_char = static_cast<char>(33);
+    const char max_ascii_char = static_cast<char>(126);
+
     for (const char& c : password) {
-        if (126 < static_cast<int>(c) || static_cast<int>(c) < 33) {
+        if (max_ascii_char < c || c < min_ascii_char) {
             return false;
         }
 
