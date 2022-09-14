@@ -1,5 +1,5 @@
-#include "password.h"
 #include <cctype>
+#include "password.h"
 
 bool ValidatePassword(const std::string& password) {
     if (14 < password.length() || password.length() < 8) {
