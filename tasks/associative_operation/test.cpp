@@ -3,6 +3,7 @@
 
 TEST_CASE("Associative") {
     std::vector<std::vector<size_t>> a = {{0, 1}, {1, 0}};
+    a = {};
     REQUIRE(IsAssociative(a));
 }
 
