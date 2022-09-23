@@ -9,7 +9,7 @@ struct TaskLast {
 };
 
 template <class T>
-void AssignMax(T &a, const T &b) {
+void AssignMax(T& a, const T& b) {
     if (a < b) {
         a = b;
     }
@@ -21,7 +21,7 @@ ScoreTable GetScoredStudents(const Events& events, time_t score_time) {
         if (event.time > score_time) {
             continue;
         }
-        auto& task_last = student_task_status[{event.student_name,event.task_name}];
+        auto& task_last = student_task_status[{event.student_name, event.task_name}];
         switch (event.event_type) {
             case EventType::CheckFailed:
                 AssignMax(task_last.fail, event.time);
