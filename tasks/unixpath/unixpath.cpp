@@ -1,8 +1,8 @@
 #include <vector>
 #include "unixpath.h"
 
-std::vector<std::string> SplitString(const std::string_view& str, char separator, size_t cur_pos) {
-    std::vector<std::string> split;
+std::vector<std::string_view> SplitString(const std::string_view& str, char separator, size_t cur_pos) {
+    std::vector<std::string_view> split;
     while (cur_pos < str.length()) {
         size_t next = std::find(str.begin() + cur_pos, str.end(), separator) - str.begin();
         split.emplace_back(str.substr(cur_pos, next - cur_pos));
@@ -12,9 +12,12 @@ std::vector<std::string> SplitString(const std::string_view& str, char separator
 }
 
 std::string NormalizePath(std::string_view current_working_dir, std::string_view path) {
-    std::vector<std::string> current_path = SplitString(current_working_dir, '/', 1u);
+    std::vector<std::string_view> current_path;
+    if (path[0] != '/') {
+        current_path = SplitString(current_working_dir, '/', 1u);
+    }
 
-    for (const std::string& action : SplitString(path, '/', 0u)) {
+    for (const std::string_view& action : SplitString(path, '/', 0u)) {
         if (action == "..") {
             if (!current_path.empty()) {
                 current_path.pop_back();
@@ -24,11 +27,8 @@ std::string NormalizePath(std::string_view current_working_dir, std::string_view
         }
     }
     std::string result;
-    for (const std::string& dir : current_path) {
-        result += "/" + dir;
+    for (const std::string_view& dir : current_path) {
+        result += "/" + static_cast<std::string>(dir);
     }
-    if (result.empty()) {
-        result = "/";
-    }
-    return result;
+    return result.empty() ? "/" : result;
 }
