@@ -13,10 +13,11 @@ bool operator<(const Student& student1, const Student& student2) {
 }
 
 bool operator<(const Applicant& applicant1, const Applicant& applicant2) {
-    return std::tie(applicant2.points, applicant1.student.birth_date, applicant1.student.name) < std::tie(applicant1.points, applicant2.student.birth_date, applicant2.student.name);
+    return std::tie(applicant2.points, applicant1.student.birth_date, applicant1.student.name) <
+           std::tie(applicant1.points, applicant2.student.birth_date, applicant2.student.name);
 }
 
-AdmissionTable FillUniversities(const std::vector<University>& universities,const std::vector<Applicant>& applicants) {
+AdmissionTable FillUniversities(const std::vector<University>& universities, const std::vector<Applicant>& applicants) {
     std::vector<const Applicant*> applicants_pointers(applicants.size());
     for (std::size_t i = 0; i < applicants_pointers.size(); ++i) {
         applicants_pointers[i] = static_cast<const Applicant*>(&applicants[i]);
