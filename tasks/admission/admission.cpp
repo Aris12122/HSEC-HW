@@ -15,17 +15,9 @@ bool operator<(const Student& student1, const Student& student2) {
            std::tie(student2.name, student2.birth_date);
 }
 
-std::pair<std::string, std::string> SplitToSurnameName(const std::string& full_name) {
-    std::size_t split = full_name.find(' ');
-    return make_pair(full_name.substr(split + 1, full_name.length() - split), full_name.substr(0, split));
-}
-
 bool operator<(const Applicant& applicant1, const Applicant& applicant2) {
-    auto surname_name1 = SplitToSurnameName(applicant1.student.name);
-    auto surname_name2 = SplitToSurnameName(applicant2.student.name);
-
-    return std::tie(applicant2.points, applicant1.student.birth_date, surname_name1) <
-           std::tie(applicant1.points, applicant2.student.birth_date, surname_name2);
+    return std::tie(applicant2.points, applicant1.student.birth_date, applicant1.student.name) <
+           std::tie(applicant1.points, applicant2.student.birth_date, applicant2.student.name);
 }
 
 
