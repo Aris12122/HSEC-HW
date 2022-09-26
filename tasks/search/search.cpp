@@ -2,7 +2,7 @@
 #include <cmath>
 #include "search.h"
 
-const double EPS = 1e-4;
+const double EPS = 1e-6;
 
 std::vector<std::string_view> ParseLine(const std::string_view& line) {
     std::vector<std::string_view> parsed_line;
@@ -21,9 +21,9 @@ std::vector<std::string_view> ParseText(const std::string_view& text) {
     do {
         const char* line_begin = std::next(line_end);
         line_end = std::find(line_begin, text.end(), '\n');
-        // if (std::find_if(line_begin, line_end, std::isalpha) != line_end) {
-        lines.emplace_back(text.substr(line_begin - text.begin(), line_end - line_begin));
-        // }
+        if (line_end - line_begin > 0) {
+            lines.emplace_back(text.substr(line_begin - text.begin(), line_end - line_begin));
+        }
     } while (line_end != text.end());
     return lines;
 }
