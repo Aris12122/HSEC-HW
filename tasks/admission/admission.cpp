@@ -20,7 +20,7 @@ bool operator<(const Applicant& applicant1, const Applicant& applicant2) {
 AdmissionTable FillUniversities(const std::vector<University>& universities, const std::vector<Applicant>& applicants) {
     std::vector<const Applicant*> applicants_pointers(applicants.size());
     for (std::size_t i = 0; i < applicants_pointers.size(); ++i) {
-        applicants_pointers[i] = static_cast<const Applicant*>(&applicants[i]);
+        applicants_pointers[i] = &applicants[i];
     }
     std::sort(applicants_pointers.begin(), applicants_pointers.end(),
               [](const Applicant* applicant1, const Applicant* applicant2) { return *applicant1 < *applicant2; });
@@ -38,7 +38,7 @@ AdmissionTable FillUniversities(const std::vector<University>& universities, con
         for (const std::string& priority_university : wish_list) {
             auto& admission_list = admission_table[priority_university];
             if (admission_list.size() < university_capacity[priority_university]) {
-                admission_list.emplace_back(static_cast<const Student*>(&student));
+                admission_list.emplace_back(&student);
                 break;
             }
         }
