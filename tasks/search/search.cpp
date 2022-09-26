@@ -21,9 +21,9 @@ std::vector<std::string_view> ParseText(const std::string_view& text) {
     do {
         const char* line_begin = std::next(line_end);
         line_end = std::find(line_begin, text.end(), '\n');
-        if (std::find_if(line_begin, line_end, std::isalpha) != line_end) {
-            lines.emplace_back(text.substr(line_begin - text.begin(), line_end - line_begin));
-        }
+        // if (std::find_if(line_begin, line_end, std::isalpha) != line_end) {
+        lines.emplace_back(text.substr(line_begin - text.begin(), line_end - line_begin));
+        // }
     } while (line_end != text.end());
     return lines;
 }
@@ -45,6 +45,7 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
 
     std::vector<std::vector<std::size_t>> occurrence(lines_number, std::vector<std::size_t>(queries.size()));
     std::vector<std::size_t> cnt_in_text(queries.size());
+    std::vector<std::size_t> cnt_in_line(lines_number);
 
     for (std::size_t line_num = 0; line_num < lines_number; ++line_num) {
         const auto& line = parsed_text[line_num];
@@ -53,6 +54,7 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
             std::size_t cnt = static_cast<std::size_t>(count(line.begin(), line.end(), word));
             occurrence[line_num][word_num] = cnt;
             cnt_in_text[word_num] += cnt;
+            cnt_in_line[line_num] += cnt;
         }
     }
 
@@ -60,7 +62,10 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
 
     for (std::size_t line_num = 0; line_num < lines_number; ++line_num) {
         const auto& line = parsed_text[line_num];
-        idf_line_num[line_num].second = line_num;
+        idf_line_num[line_num] = {0, line_num};
+        if (cnt_in_line[line_num] == 0) {
+            continue;
+        }
         for (std::size_t word_num = 0; word_num < queries.size(); ++word_num) {
             if (cnt_in_text[word_num] == 0) {
                 continue;
