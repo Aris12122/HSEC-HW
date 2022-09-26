@@ -2,6 +2,8 @@
 #include <cmath>
 #include "search.h"
 
+const double EPS = 1e-9;
+
 std::vector<std::string_view> ParseLine(const std::string_view& line) {
     std::vector<std::string_view> parsed_line;
     const char* word_begin = std::find_if(line.begin(), line.end(), std::isalpha);
@@ -43,7 +45,6 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
 
     std::vector<std::vector<std::size_t>> occurrence(lines_number, std::vector<std::size_t>(queries.size()));
     std::vector<std::size_t> cnt_in_text(queries.size());
-    std::vector<std::size_t> cnt_in_line(lines_number);
 
     for (std::size_t line_num = 0; line_num < lines_number; ++line_num) {
         const auto& line = parsed_text[line_num];
@@ -52,13 +53,10 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
             std::size_t cnt = static_cast<std::size_t>(count(line.begin(), line.end(), word));
             occurrence[line_num][word_num] = cnt;
             cnt_in_text[word_num] += cnt;
-            cnt_in_line[line_num] += cnt;
         }
     }
 
     std::vector<std::pair<double, std::size_t>> idf_line_num(lines_number);
-
-    double double_lines_number = static_cast<double>(lines_number);
 
     for (std::size_t line_num = 0; line_num < lines_number; ++line_num) {
         const auto& line = parsed_text[line_num];
@@ -67,20 +65,20 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
             if (cnt_in_text[word_num] == 0) {
                 continue;
             }
-            idf_line_num[line_num].first += log(double_lines_number / static_cast<double>(cnt_in_text[word_num])) *
+            idf_line_num[line_num].first += log(static_cast<double>(lines_number) / static_cast<double>(cnt_in_text[word_num])) *
                                             static_cast<double>(occurrence[line_num][word_num]) /
                                             static_cast<double>(line.size());
         }
     }
 
     std::stable_sort(idf_line_num.begin(), idf_line_num.end(),
-                     [](const auto& idf1, const auto& idf2) { return idf1.first > idf2.first; });
+                     [](const auto& idf1, const auto& idf2) { return idf1.first > idf2.first + EPS; });
 
     std::vector<std::string_view> most_relevant;
 
     for (std::size_t i = 0; i < std::min(results_count, lines_number); ++i) {
         const auto& [idf, line_num] = idf_line_num[i];
-        if (idf > 0.) {
+        if (idf > EPS) {
             most_relevant.emplace_back(lines[line_num]);
         }
     }
