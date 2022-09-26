@@ -65,8 +65,9 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
             if (cnt_in_text[word_num] == 0) {
                 continue;
             }
-            idf_line_num[line_num].first += log(static_cast<double>(lines_number) / static_cast<double>(cnt_in_text[word_num])) *
-                                            static_cast<double>(occurrence[line_num][word_num]) / static_cast<double>(line.size());
+            idf_line_num[line_num].first +=
+                log(static_cast<double>(lines_number) / static_cast<double>(cnt_in_text[word_num])) *
+                static_cast<double>(occurrence[line_num][word_num]) / static_cast<double>(line.size());
         }
     }
 
