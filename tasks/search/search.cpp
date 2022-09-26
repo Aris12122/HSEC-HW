@@ -2,7 +2,7 @@
 #include <cmath>
 #include "search.h"
 
-const double EPS = 1e-6;
+const double EPS = 1e-8;
 
 std::vector<std::string_view> ParseLine(const std::string_view& line) {
     std::vector<std::string_view> parsed_line;
@@ -21,7 +21,7 @@ std::vector<std::string_view> ParseText(const std::string_view& text) {
     do {
         const char* line_begin = std::next(line_end);
         line_end = std::find(line_begin, text.end(), '\n');
-        if (line_end - line_begin > 0) {
+        if (std::find_if(line_begin, line_end, std::isalpha) != line_end) {
             lines.emplace_back(text.substr(line_begin - text.begin(), line_end - line_begin));
         }
     } while (line_end != text.end());
@@ -44,8 +44,7 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
     std::size_t lines_number = parsed_text.size();
 
     std::vector<std::vector<std::size_t>> occurrence(lines_number, std::vector<std::size_t>(queries.size()));
-    std::vector<std::size_t> cnt_in_text(queries.size());
-    std::vector<std::size_t> cnt_in_line(lines_number);
+    std::vector<std::size_t> cnt_in_text(queries.size(), 0u);
 
     for (std::size_t line_num = 0; line_num < lines_number; ++line_num) {
         const auto& line = parsed_text[line_num];
@@ -53,8 +52,7 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
             const auto& word = queries[word_num];
             std::size_t cnt = static_cast<std::size_t>(count(line.begin(), line.end(), word));
             occurrence[line_num][word_num] = cnt;
-            cnt_in_text[word_num] += cnt;
-            cnt_in_line[line_num] += cnt;
+            ++cnt_in_text[word_num];
         }
     }
 
@@ -62,12 +60,9 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
 
     for (std::size_t line_num = 0; line_num < lines_number; ++line_num) {
         const auto& line = parsed_text[line_num];
-        idf_line_num[line_num] = {0, line_num};
-        if (cnt_in_line[line_num] == 0) {
-            continue;
-        }
+        idf_line_num[line_num] = {0., line_num};
         for (std::size_t word_num = 0; word_num < queries.size(); ++word_num) {
-            if (cnt_in_text[word_num] == 0) {
+            if (cnt_in_text[word_num] == 0u) {
                 continue;
             }
             idf_line_num[line_num].first +=
