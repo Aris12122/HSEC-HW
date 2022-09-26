@@ -2,7 +2,7 @@
 #include <cmath>
 #include "search.h"
 
-const double EPS = 1e-9;
+const double EPS = 1e-6;
 
 std::vector<std::string_view> ParseLine(const std::string_view& line) {
     std::vector<std::string_view> parsed_line;
