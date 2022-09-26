@@ -16,18 +16,18 @@ TEST_CASE("Search") {
         "of the printing and typesetting industry.\n"
         "Lorem Ipsum has been the industry's standard\n"
         "dummy text ever since the 1500s, when an unknown\n"
-        "printer took a galley of type and scrambled it\n"
+        "printer took a galley of type \n"
         "to make a type specimen book. It has survived\n"
         "\t \t \n"
         "\n"
         "electronic typesetting, remaining essentially\n"
         "unchanged. It was popularised in the 1960s with\n"
-        "the release of Letraset sheets containing Lorem\n"
+        "the release of Letraset sheets containing \n"
         "psum passages, and more recently with desktop\n"
         "publishing software like Aldus PageMaker\n"
         "including versions of Lorem Ipsum.";
 
-    std::string_view query = "typesetting release";
+    std::string_view query = " \t g ";
     std::vector<std::string_view> expected = {"electronic typesetting, remaining essentially"};
 
     const auto& actual = Search(text, query, 1);
