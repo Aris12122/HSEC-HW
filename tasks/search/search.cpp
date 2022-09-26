@@ -5,7 +5,7 @@
 std::vector<std::string_view> ParseLine(const std::string_view& line) {
     std::vector<std::string_view> parsed_line;
     const char* word_begin = std::find_if(line.begin(), line.end(), std::isalpha);
-    while(word_begin != line.end()) {
+    while (word_begin != line.end()) {
         const char* word_end = std::find_if_not(word_begin, line.end(), std::isalpha);
         parsed_line.emplace_back(line.substr(word_begin - line.begin(), word_end - word_begin));
         word_begin = std::find_if(word_end, line.end(), std::isalpha);
@@ -20,7 +20,7 @@ std::vector<std::string_view> ParseText(const std::string_view& text) {
         const char* line_begin = std::next(line_end);
         line_end = std::find(line_begin, text.end(), '\n');
         lines.emplace_back(text.substr(line_begin - text.begin(), line_end - line_begin));
-    } while(line_end != text.end());
+    } while (line_end != text.end());
     return lines;
 }
 
@@ -54,7 +54,7 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
         }
     }
 
-    std::vector<std::pair<double, std::size_t>> idf_line_num (lines_number);
+    std::vector<std::pair<double, std::size_t>> idf_line_num(lines_number);
 
     double double_lines_number = static_cast<double>(lines_number);
 
@@ -68,9 +68,8 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
         }
     }
 
-    std::stable_sort(idf_line_num.begin(), idf_line_num.end(), [](const auto& idf1, const auto& idf2) {
-        return idf1.first > idf2.first;
-    });
+    std::stable_sort(idf_line_num.begin(), idf_line_num.end(),
+                     [](const auto& idf1, const auto& idf2) { return idf1.first > idf2.first; });
 
     std::vector<std::string_view> most_relevant;
 
