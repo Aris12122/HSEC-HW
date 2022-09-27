@@ -5,8 +5,7 @@
 int64_t ScalarProduct(const std::vector<int>& v1, const std::vector<int>& v2) {
     int64_t scalar_product = 0;
     for (std::size_t i = 0; i < v1.size(); ++i) {
-        scalar_product += static_cast<int64_t>(v1[i]) *
-                          static_cast<int64_t>(v2[i]);
+        scalar_product += static_cast<int64_t>(v1[i]) * static_cast<int64_t>(v2[i]);
     }
     return scalar_product;
 }
