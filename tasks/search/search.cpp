@@ -1,16 +1,17 @@
 #include <cctype>
 #include <cmath>
 #include "search.h"
+#include <string>
 
 const double EPS = 1e-8;
 
 std::vector<std::string_view> ParseLine(const std::string_view& line) {
     std::vector<std::string_view> parsed_line;
-    const char* word_begin = std::find_if(line.begin(), line.end(), std::isalpha);
+    const char* word_begin = std::find_if(line.begin(), line.end(), isalpha);
     while (word_begin != line.end()) {
-        const char* word_end = std::find_if_not(word_begin, line.end(), std::isalpha);
+        const char* word_end = std::find_if_not(word_begin, line.end(), isalpha);
         parsed_line.emplace_back(line.substr(word_begin - line.begin(), word_end - word_begin));
-        word_begin = std::find_if(word_end, line.end(), std::isalpha);
+        word_begin = std::find_if(word_end, line.end(), isalpha);
     }
     return parsed_line;
 }
@@ -36,6 +37,14 @@ std::vector<std::vector<std::string_view>> ParseLines(const std::vector<std::str
     return parsed_text;
 }
 
+std::string ToLower(const std::string_view& str_v) {
+    std::string str = static_cast<std::string>(str_v);
+    for (std::size_t i = 0; i < str_v.size(); ++i) {
+        str += static_cast<char>(std::tolower(static_cast<int>(str_v[i])));
+    }
+    return str;
+}
+
 std::vector<std::string_view> Search(std::string_view text, std::string_view query, size_t results_count) {
     std::vector<std::string_view> lines = ParseText(text);
     std::vector<std::vector<std::string_view>> parsed_text = ParseLines(lines);
@@ -50,8 +59,9 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
     for (std::size_t line_num = 0; line_num < lines_number; ++line_num) {
         const auto& line = parsed_text[line_num];
         for (std::size_t word_num = 0; word_num < queries.size(); ++word_num) {
-            const auto& word = queries[word_num];
-            std::size_t cnt = static_cast<std::size_t>(count(line.begin(), line.end(), word));
+            std::string word = ToLower(queries[word_num]);
+            std::size_t cnt = static_cast<std::size_t>(count_if(line.begin(), line.end(),
+                                                       [&](const std::string_view& str){ return ToLower(str) == word; }));
             occurrence[line_num][word_num] = cnt;
             if (cnt > 0) {
                 ++cnt_in_text[word_num];
