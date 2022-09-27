@@ -61,7 +61,7 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
         for (std::size_t word_num = 0; word_num < queries.size(); ++word_num) {
             std::string word = ToLower(queries[word_num]);
             std::size_t cnt = static_cast<std::size_t>(
-                count_if(line.begin(), line.end(), [&](const std::string_view& str){ return ToLower(str) == word; }));
+                count_if(line.begin(), line.end(), [&](const std::string_view& str) { return ToLower(str) == word; }));
             occurrence[line_num][word_num] = cnt;
             if (cnt > 0) {
                 ++cnt_in_text[word_num];
