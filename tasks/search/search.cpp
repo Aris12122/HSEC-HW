@@ -2,6 +2,7 @@
 #include <cmath>
 #include "search.h"
 #include <string>
+#include <unordered_set>
 
 const double EPS = 1e-8;
 
@@ -22,7 +23,7 @@ std::vector<std::string_view> ParseText(const std::string_view& text) {
     do {
         const char* line_begin = std::next(line_end);
         line_end = std::find(line_begin, text.end(), '\n');
-        if (line_end - line_begin > 0) {
+        if (std::find_if(line_begin, line_end, isalpha) != line_end) {
             lines.emplace_back(text.substr(line_begin - text.begin(), line_end - line_begin));
         }
     } while (line_end != text.end());
@@ -38,7 +39,7 @@ std::vector<std::vector<std::string_view>> ParseLines(const std::vector<std::str
 }
 
 std::string ToLower(const std::string_view& str_v) {
-    std::string str = static_cast<std::string>(str_v);
+    std::string str;
     for (std::size_t i = 0; i < str_v.size(); ++i) {
         str += static_cast<char>(std::tolower(static_cast<int>(str_v[i])));
     }
@@ -48,25 +49,30 @@ std::string ToLower(const std::string_view& str_v) {
 std::vector<std::string_view> Search(std::string_view text, std::string_view query, size_t results_count) {
     std::vector<std::string_view> lines = ParseText(text);
     std::vector<std::vector<std::string_view>> parsed_text = ParseLines(lines);
-    std::vector<std::string_view> queries = ParseLine(query);
+    std::vector<std::string_view> parsed_query = ParseLine(query);
+    std::unordered_set<std::string_view> queries;
+
+    for (const auto& str : parsed_query) {
+        queries.insert(std::move(str));
+    }
 
     std::size_t lines_number = parsed_text.size();
 
     std::vector<std::vector<std::size_t>> occurrence(lines_number, std::vector<std::size_t>(queries.size()));
     std::vector<std::size_t> cnt_in_text(queries.size(), 0u);
-    std::vector<bool> cnt_in_line(lines_number, false);
 
     for (std::size_t line_num = 0; line_num < lines_number; ++line_num) {
         const auto& line = parsed_text[line_num];
-        for (std::size_t word_num = 0; word_num < queries.size(); ++word_num) {
-            std::string word = ToLower(queries[word_num]);
+        std::size_t word_num = 0;
+        for (const auto& word : queries) {
             std::size_t cnt = static_cast<std::size_t>(
                 count_if(line.begin(), line.end(), [&](const std::string_view& str) { return ToLower(str) == word; }));
+
             occurrence[line_num][word_num] = cnt;
             if (cnt > 0) {
                 ++cnt_in_text[word_num];
-                cnt_in_line[line_num] = true;
             }
+            word_num++;
         }
     }
 
@@ -75,9 +81,6 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
     for (std::size_t line_num = 0; line_num < lines_number; ++line_num) {
         const auto& line = parsed_text[line_num];
         idf_line_num[line_num] = {0., line_num};
-        if (!cnt_in_line[line_num]) {
-            continue;
-        }
         for (std::size_t word_num = 0; word_num < queries.size(); ++word_num) {
             if (cnt_in_text[word_num] == 0u) {
                 continue;
