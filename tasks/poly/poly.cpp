@@ -94,6 +94,9 @@ Poly Poly::operator*(const Poly& other) const {
     res.Normalize();
     return res;
 }
+const Poly& Poly::operator*=(const Poly& other) {
+    return *this = *this * other;
+}
 void Poly::Normalize() {
     erase_if(poly_, [](const auto &item) {
         return item.second == 0;
@@ -120,3 +123,4 @@ std::ostream& operator<<(std::ostream& os, const Poly& poly) {
     }
     return os;
 }
+
