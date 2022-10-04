@@ -7,10 +7,10 @@
 class Poly {
 public:
     Poly();
-    Poly(const std::initializer_list<int>& initializer_list);
-    Poly(const std::initializer_list<std::pair<int, int>>& initializer_pair_list);
+    Poly(const std::initializer_list<int64_t>& initializer_list);
+    Poly(const std::initializer_list<std::pair<int64_t, int64_t>>& initializer_pair_list);
 
-    int64_t operator()(int x) const;
+    int64_t operator()(int64_t x) const;
 
     bool operator==(const Poly& other) const;
     bool operator!=(const Poly& other) const;
@@ -29,7 +29,7 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const Poly& poly);
 
 private:
-    std::map<size_t, int> poly_;
+    std::map<size_t, int64_t> poly_;
 
     void Normalize();
 };

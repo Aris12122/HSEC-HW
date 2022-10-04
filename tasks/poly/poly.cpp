@@ -5,16 +5,16 @@
 Poly::Poly() {
     poly_.clear();
 }
-Poly::Poly(const std::initializer_list<int>& initializer_list) {
+Poly::Poly(const std::initializer_list<int64_t>& initializer_list) {
     size_t i = 0;
-    for (int a : initializer_list) {
+    for (int64_t a : initializer_list) {
         if (a != 0) {
             poly_[i] = a;
         }
         i++;
     }
 }
-Poly::Poly(const std::initializer_list<std::pair<int, int>>& initializer_pair_list) {
+Poly::Poly(const std::initializer_list<std::pair<int64_t, int64_t>>& initializer_pair_list) {
     for (auto [i, a] : initializer_pair_list) {
         if (a != 0) {
             poly_[i] = a;
@@ -22,7 +22,7 @@ Poly::Poly(const std::initializer_list<std::pair<int, int>>& initializer_pair_li
         i++;
     }
 }
-int64_t Poly::operator()(int x) const {
+int64_t Poly::operator()(int64_t x) const {
     int64_t y = 0;
     size_t j = 0;
     int64_t xj = 1;
@@ -108,16 +108,18 @@ std::ostream& operator<<(std::ostream& os, const Poly& poly) {
     }
     auto it = poly.poly_.rbegin();
     size_t i = 0u;
-    int a = 0;
+    int64_t a = 0;
     std::tie(i, a) = *it;
     os << a << (i == 0 ? "" : "x^" + std::to_string(i));
 
     for (++it; it != poly.poly_.rend(); ++it) {
         std::tie(i, a) = *it;
         os << ' ';
-        os << (a < 0 ? '-' : '+');
-        os << ' ';
-        os << abs(a);
+        if (a < 0) {
+            os << "- " << -a;
+        } else {
+            os << "+ " << a;
+        }
     }
     return os;
 }
