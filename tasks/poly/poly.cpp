@@ -19,7 +19,6 @@ Poly::Poly(const std::initializer_list<std::pair<int64_t, int64_t>>& initializer
         if (a != 0) {
             poly_[i] = a;
         }
-        i++;
     }
 }
 int64_t Poly::operator()(int64_t x) const {

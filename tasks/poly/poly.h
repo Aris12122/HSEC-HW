@@ -29,7 +29,7 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const Poly& poly);
 
 private:
-    std::map<size_t, int64_t> poly_;
+    std::map<uint64_t, int64_t> poly_;
 
     void Normalize();
 };
