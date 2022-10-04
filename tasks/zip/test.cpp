@@ -9,9 +9,7 @@ TEST_CASE("Zip") {
     const std::forward_list<Value> b = {"one", "two", "three"};
     std::stringstream stream;
 
-    Zipped zipped = Zip(a.begin(), a.end(), b.begin(), b.end());
-    for (auto it = zipped.begin(); it != zipped.end(); ++it) {
-        const auto& pair = *it;
+    for (const auto& pair : Zip(a.begin(), a.end(), b.begin(), b.end())) {
         stream << pair.first << ":" << pair.second << " ";
     }
 

@@ -13,8 +13,6 @@ public:
     const std::_List_const_iterator<ZippedPair> begin() const;
 
     const std::_List_const_iterator<ZippedPair> end() const;
-
-    std::list<ZippedPair> zipped_list_;
 };
 
 Zipped Zip(Iterator a_begin, Iterator a_end, Iterator b_begin, Iterator b_end);
