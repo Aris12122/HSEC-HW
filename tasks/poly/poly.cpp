@@ -47,7 +47,7 @@ Poly Poly::operator-(const Poly& other) const {
     return res;
 }
 const Poly& Poly::operator-=(const Poly& other) {
-    for (auto &[i, a] : other.poly_) {
+    for (auto [i, a] : other.poly_) {
         if (!poly_.contains(i)) {
             poly_[i] = -a;
         } else {
@@ -65,7 +65,7 @@ Poly Poly::operator+(const Poly& other) const {
     return res;
 }
 const Poly& Poly::operator+=(const Poly& other) {
-    for (auto &[i, a] : other.poly_) {
+    for (auto [i, a] : other.poly_) {
         if (!poly_.contains(i)) {
             poly_[i] = +a;
         } else {
@@ -79,7 +79,7 @@ const Poly& Poly::operator+=(const Poly& other) {
 }
 Poly Poly::operator-() const {
     Poly res(*this);
-    for (auto &[i, a] : poly_) {
+    for (auto [i, a] : poly_) {
         res.poly_[i] = -a;
     }
     return res;
@@ -98,9 +98,7 @@ const Poly& Poly::operator*=(const Poly& other) {
     return *this = *this * other;
 }
 void Poly::Normalize() {
-    erase_if(poly_, [](const auto &item) {
-        return item.second == 0;
-    });
+    erase_if(poly_, [](const auto& item) { return item.second == 0; });
 }
 std::ostream& operator<<(std::ostream& os, const Poly& poly) {
     os << "y = ";
@@ -123,4 +121,3 @@ std::ostream& operator<<(std::ostream& os, const Poly& poly) {
     }
     return os;
 }
-

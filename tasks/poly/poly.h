@@ -8,7 +8,7 @@ class Poly {
 public:
     Poly();
     Poly(const std::initializer_list<int>& initializer_list);
-    Poly(const std::initializer_list<std::pair<int,int>>& initializer_pair_list);
+    Poly(const std::initializer_list<std::pair<int, int>>& initializer_pair_list);
 
     int64_t operator()(int x) const;
 
@@ -27,6 +27,7 @@ public:
     const Poly& operator*=(const Poly& other);
 
     friend std::ostream& operator<<(std::ostream& os, const Poly& poly);
+    
 private:
     std::map<size_t, int> poly_;
 
