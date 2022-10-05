@@ -1,20 +1,20 @@
 #include "vector.h"
-Vector::Vector(): size_(0u), capacity_(0u), data_(NULL) {
+Vector::Vector() : size_(0u), capacity_(0u), data_(NULL) {
 }
-Vector::Vector(size_t size): size_(size), capacity_(size_) {
+Vector::Vector(size_t size) : size_(size), capacity_(size_) {
     data_ = new ValueType[capacity_];
     for (size_t i = 0; i < size; ++i) {
         data_[i] = 0;
     }
 }
-Vector::Vector(std::initializer_list<ValueType> list): size_(list.size()), capacity_(list.size()) {
+Vector::Vector(std::initializer_list<ValueType> list) : size_(list.size()), capacity_(list.size()) {
     data_ = new ValueType[capacity_];
     size_t i = 0;
     for (ValueType value : list) {
         data_[i++] = value;
     }
 }
-Vector::Vector(const Vector& other): size_(other.size_), capacity_(other.capacity_) {
+Vector::Vector(const Vector& other) : size_(other.size_), capacity_(other.capacity_) {
     data_ = new ValueType[capacity_];
     for (size_t i = 0; i < size_; ++i) {
         data_[i] = other.data_[i];
@@ -73,7 +73,7 @@ bool Vector::operator!=(const Vector& other) const {
 }
 std::strong_ordering Vector::operator<=>(const Vector& other) const {
     for (size_t i = 0; i < size_; ++i) {
-        if (i == other.size_) { // size_ > other.size_
+        if (i == other.size_) {  // size_ > other.size_
             return std::strong_ordering::greater;
         }
         if (data_[i] < other.data_[i]) {
@@ -141,9 +141,9 @@ Vector::Iterator Vector::begin() {
 Vector::Iterator Vector::end() {
     return End();
 }
-Vector::Iterator::Iterator(Vector::ValueType* pointer): m_ptr_(pointer) {
+Vector::Iterator::Iterator(Vector::ValueType* pointer) : m_ptr_(pointer) {
 }
-Vector::Iterator::Iterator(): m_ptr_(NULL) {
+Vector::Iterator::Iterator() : m_ptr_(NULL) {
 }
 Vector::ValueType& Vector::Iterator::operator*() const {
     return *m_ptr_;
