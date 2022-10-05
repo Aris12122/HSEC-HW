@@ -1,18 +1,16 @@
 #include "zip.h"
 
 Zipped Zip(Iterator a_begin, Iterator a_end, Iterator b_begin, Iterator b_end) {
-    Iterator it_b = b_begin;
-    Zipped zipped;
-    for (Iterator it_a = a_begin; it_a != a_end && it_b != b_end; ++it_a, ++it_b) {
-        zipped.zipped_list_.emplace_back(*it_a, *it_b);
-    }
-    return zipped;
+    return Zipped(a_begin, a_end, b_begin, b_end);
 }
-
-const std::_Fwd_list_iterator<ZippedPair> Zipped::begin() const {
-    return new ZippedPair {*a_begin, *b_begin};
+Zipped::Zipped(Iterator a_begin, Iterator a_end, Iterator b_begin, Iterator b_end):
+      a_begin_(a_begin), a_end_(a_end), b_begin_(b_begin), b_end_(b_end) {
 }
-
-const std::_List_const_iterator<ZippedPair> Zipped::end() const {
-    return zipped_list_.end();
+const ZipIterator Zipped::begin() const {
+    return ZipIterator(a_begin_, b_begin_);
+}
+const ZipIterator Zipped::end() const {
+    return ZipIterator(a_end_, b_end_);
+}
+ZipIterator::ZipIterator(Iterator it_a, Iterator it_b): it_a_(it_a), it_b_(it_b) {
 }
