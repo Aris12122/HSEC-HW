@@ -31,7 +31,6 @@ TEST_CASE("Constructors") {
         RequireEquality(a, StdVector(5));
     }
 }
-
 TEST_CASE("Basic methods") {
     Vector a{1, 3, 5};
     REQUIRE(a.Capacity() == 3u);
