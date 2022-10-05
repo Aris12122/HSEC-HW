@@ -17,6 +17,12 @@ public:
         DEFEAT,
     };
 
+    enum class CellStatus {
+        CLOSED,
+        FLAG,
+        OPEN,
+    };
+
     using RenderedField = std::vector<std::string>;
 
     Minesweeper(size_t width, size_t height, size_t mines_count);
@@ -32,4 +38,25 @@ public:
     time_t GetGameTime() const;
 
     RenderedField RenderField() const;
+
+private:
+    std::vector<std::vector<CellStatus>> field_;
+    std::vector<std::vector<bool>> has_mine_;
+    size_t width_;
+    size_t height_;
+
+    time_t begin_time_;
+    GameStatus game_status_;
+
+    size_t should_open_;
+    size_t opened_;
+
+    void GameLose();
+    void GameWin();
+
+    size_t CountAdjMines(const Cell& cell) const;
+
+    std::vector<Cell> GetAdjCells(const Cell& cell) const;
+
+    bool InField(const Cell& cell) const;
 };
