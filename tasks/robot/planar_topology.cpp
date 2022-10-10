@@ -7,7 +7,7 @@ std::vector<Point> PlanarTopology::GetAllNeighbours(const Point& point) const {
     int iy = static_cast<int>(point.y);
 
     for (auto [dx, dy] : dd_) {
-        if (ix + dx < 0 || ix + dx >= GetFieldWidth() || iy + dy < 0 || iy + dy >= GetFieldHigh()) {
+        if (!IsInField(ix + dx, iy + dy)) {
             continue;
         }
         result.emplace_back(MovedPoint(point, dx, dy));

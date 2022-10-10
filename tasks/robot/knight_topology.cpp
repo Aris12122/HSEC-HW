@@ -11,7 +11,7 @@ std::vector<Point> KnightTopology::GetAllNeighbours(const Point& point) const {
             if (abs(dx * dy) != 2) {
                 continue;
             }
-            if (ix + dx < 0 || ix + dx >= GetFieldWidth() || iy + dy < 0 || iy + dy >= GetFieldHigh()) {
+            if (!IsInField(ix + dx, iy + dy)) {
                 continue;
             }
             result.emplace_back(MovedPoint(point, dx, dy));

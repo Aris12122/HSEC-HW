@@ -15,6 +15,6 @@ struct Point {
 template <>
 struct std::hash<Point> {
     std::size_t operator()(const Point& point) const {
-        return point.x + point.y;
+        return (point.x + point.y * 132487) % 23489371;
     }
 };

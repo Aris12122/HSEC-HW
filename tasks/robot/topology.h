@@ -13,6 +13,8 @@ protected:
     size_t GetFieldWidth() const;
     size_t GetFieldHigh() const;
 
+    bool IsInField(int x, int y) const;
+
     std::vector<std::vector<bool>> field_;
 };
 

@@ -11,6 +11,9 @@ size_t Field::GetFieldWidth() const {
 size_t Field::GetFieldHigh() const {
     return field_.size();
 }
+bool Field::IsInField(int x, int y) const {
+    return x >= 0 && x < GetFieldWidth() && y >= 0 && y < GetFieldHigh();
+}
 std::vector<Point> Topology::GetNeighbours(const Point& point) const {
     std::vector<Point> result;
     for (const Point& next : GetAllNeighbours(point)) {
