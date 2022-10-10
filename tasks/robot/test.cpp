@@ -86,7 +86,6 @@ TEST_CASE("RobotPlanar") {
         };
         REQUIRE(path == expected_path);
     }
-    return;
     {
         const auto& map = ParseMap({
             ".*.",

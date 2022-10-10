@@ -14,6 +14,9 @@ Path FindPath(World& world) {
         Point best_next = cur_point;
         Topology::Distance min_dist(0);
         for (const auto& [next, dist_to_end] : world.Lookup()) {
+            if (dist_to_end == Topology::UNREACHABLE) {
+                continue;
+            }
             if (best_next == cur_point || dist_to_end < min_dist) {
                 best_next = next;
                 min_dist = dist_to_end;
