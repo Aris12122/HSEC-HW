@@ -5,7 +5,7 @@
 
 class CheckersTopology : public Topology {
 public:
-    CheckersTopology(const std::vector<std::vector<bool>>&);
+    explicit CheckersTopology(const std::vector<std::vector<bool>>& field);
 
     std::vector<Point> GetAllNeighbours(const Point& point) const override;
 
