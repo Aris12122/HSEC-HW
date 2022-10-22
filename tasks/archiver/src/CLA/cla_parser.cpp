@@ -67,10 +67,12 @@ void CLAParser::Parse(int argc, char** argv) {
             std::cerr << "Expected argument_name (with '-' or '--'), but " << argv[pos] << " found" << std::endl;
             throw InvalidArguments();
         }
+        bool found = false;
         for (auto& argument : args_) {
             if ((argv[pos] == "-" + std::string(1, argument.short_name)) ||
                 (argv[pos] == "--" + argument.long_name)) {
 
+                found = true;
                 if (argument.to_perform) {
                     std::cerr << "Each argument expected no more than once, but " << argument.long_name << " found twice" << std::endl;
                     throw InvalidArguments();
@@ -87,6 +89,10 @@ void CLAParser::Parse(int argc, char** argv) {
                     break;
                 }
             }
+        }
+        if (!found) {
+            std::cerr << "Invalid argument found: " << argv[pos] << std::endl;
+            throw InvalidArguments();
         }
     }
 }

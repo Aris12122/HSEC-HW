@@ -3,6 +3,7 @@
 //
 #pragma once
 #include "exception"
+#include "iostream"
 
 class IOSException : std::exception{
 };
