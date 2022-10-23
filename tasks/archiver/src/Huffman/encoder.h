@@ -24,6 +24,8 @@ public:
 
     void PrintTrieData(Writer& writer);
 
+    ~Encoder();
+
 private:
     void ToCanonical();
 

@@ -143,3 +143,6 @@ void Encoder::PrintTrieData(Writer& writer) {
         writer.WriteSymbol(Symbol(num_code_size_[code_size], WORD_LEN));
     }
 }
+Encoder::~Encoder() {
+    root.reset();
+}
