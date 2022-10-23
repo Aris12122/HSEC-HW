@@ -88,6 +88,9 @@ void Encoder::ToCanonical() {
             current_code.Add(false);
         }
         coded_symbol_[symbol] = current_code;
+        while (current_code.Size() >= num_code_size_.size()) {
+            num_code_size_.emplace_back(0u);
+        }
         num_code_size_[current_code.Size()]++;
 
         if (max_code_size_ < current_code.Size()) {

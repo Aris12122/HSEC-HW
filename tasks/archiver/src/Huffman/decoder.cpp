@@ -20,6 +20,9 @@ void Decoder::ReadTrieData() {
     size_t cur_symbols_cnt = 0u;
     for (size_t code_size = 1u; cur_symbols_cnt < symbols_count_; ++code_size) {
         reader_.ReadSymbol(read, WORD_LEN);
+        while (code_size >= num_code_size_.size()) {
+            num_code_size_.emplace_back(0u);
+        }
         num_code_size_[code_size] = read.ToInt();
         cur_symbols_cnt += read.ToInt();
         max_code_size_ = code_size;
