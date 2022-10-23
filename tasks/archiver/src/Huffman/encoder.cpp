@@ -36,7 +36,7 @@ void Encoder::Encode() {
         return std::tie(less.first, less.second) < std::tie(greater.first, greater.second);
     });
 
-    typedef std::pair<size_t, std::unique_ptr<Trie>> PairCntTrie;
+    using PairCntTrie = std::pair<size_t, std::unique_ptr<Trie>>;
 
     std::queue<PairCntTrie> symbol_freq;
     for (const auto& [cnt, symbol] : symbol_freq_vec) {
