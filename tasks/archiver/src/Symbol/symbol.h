@@ -10,8 +10,11 @@ class Symbol{
 public:
     Symbol();
     explicit Symbol(size_t x);
+    explicit Symbol(size_t x, size_t len);
+
     explicit Symbol(const std::vector<bool>& vb);
     explicit Symbol(const std::string& b_str);
+    explicit Symbol(const Symbol& other, size_t len);
 
     bool operator<(const Symbol& other) const;
 
@@ -24,6 +27,8 @@ public:
     size_t Size() const;
 
     bool IsEmpty() const;
+    void Clear();
+    void Reverse();
 
     void Add(bool x);
 

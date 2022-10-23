@@ -8,15 +8,19 @@ Reader::Reader(std::istream& input): input_(input) {
     cur_pos_ = BUFFER_SIZE;
 }
 
-void Reader::ReadSymbol(Symbol& symbol, size_t len) {
+bool Reader::ReadSymbol(Symbol& symbol, size_t len) {
     for (size_t i = 0; i < len; ++i) {
         symbol.bit_seq_.emplace_back(ReadBit());
     }
+    symbol.Reverse();
+    return input_.good();
 }
 bool Reader::ReadBit() {
     if (cur_pos_ == BUFFER_SIZE) {
         buff_ = 0;
-        input_.read(&buff_, BUFFER_SIZE);
+        if (input_.good()) {
+            input_.read(&buff_, 1u);
+        }
         cur_pos_ = 0u;
     }
     return (buff_ >> cur_pos_++) & 1;

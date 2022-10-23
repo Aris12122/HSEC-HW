@@ -3,13 +3,14 @@
 //
 #pragma once
 #include <bitset>
+#include <ostream>
 #include "../init.h"
 
 class Writer{
 public:
     explicit Writer(std::ostream& output);
 
-    void WriteSymbol(Symbol& symbol);
+    void WriteSymbol(const Symbol& symbol);
 
     void WriteBit(bool x);
 

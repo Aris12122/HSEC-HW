@@ -147,7 +147,8 @@ void TestIO() {
 }
 
 void Test() {
-//    TestCLA();
+    TestCLA();
     TestIO();
+
 }
 // ENDNOLINT

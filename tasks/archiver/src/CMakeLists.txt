@@ -7,4 +7,6 @@ add_executable(
         Symbol/symbol.h Symbol/symbol.cpp
         IO/reader.h IO/reader.cpp
         IO/writer.h IO/writer.cpp
+        Huffman/encoder.h Huffman/encoder.cpp
+        Huffman/huffman.h Huffman/huffman.cpp
 )

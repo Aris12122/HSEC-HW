@@ -9,7 +9,7 @@ class Reader{
 public:
     explicit Reader(std::istream& input);
 
-    void ReadSymbol(Symbol& symbol, size_t len = WORD_LEN);
+    bool ReadSymbol(Symbol& symbol, size_t len);
 
     bool ReadBit();
 
