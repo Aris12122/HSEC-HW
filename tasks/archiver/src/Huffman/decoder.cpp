@@ -90,5 +90,5 @@ void Decoder::DecodeNext(Symbol& symbol, std::unique_ptr<Trie>& vertex) {
     }
 }
 Decoder::~Decoder() {
-    root = NULL;
+    root.reset();
 }

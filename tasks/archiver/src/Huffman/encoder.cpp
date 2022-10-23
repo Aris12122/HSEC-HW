@@ -79,7 +79,7 @@ void Encoder::Encode() {
 void Encoder::ToCanonical() {
     std::vector<std::pair<size_t, Symbol>> len_symbol_vec;
     GetLeafs(root, len_symbol_vec);
-    root.release();
+    root.reset();
     std::sort(len_symbol_vec.begin(), len_symbol_vec.end());
 
     Symbol current_code;

@@ -2,6 +2,7 @@
 // Created by aris on 10/21/22.
 //
 #include "huffman.h"
+#include "iostream"
 
 void Huffman::BuildTrie(std::vector<std::pair<Symbol, Symbol>> symbol_code) {
     root = std::make_unique<Trie>();
