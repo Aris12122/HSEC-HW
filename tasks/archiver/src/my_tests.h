@@ -2,6 +2,8 @@
 // BEGINNOLINT
 #include "CLA/cla_parser.h"
 #include "Exceptions/exceptions.h"
+#include <cassert>
+#include <sstream>
 
 int CLAChecking(int argc, char **argv) {
     try {
@@ -100,33 +102,38 @@ void TestCLA() {
 }
 
 void TestIO() {
+    std::string ans;
     {
         std::ostringstream os;
         Writer writer(os);
-        Symbol symbol(2u);
+        Symbol symbol("00100110");  //  00100110 -> 38
         writer.WriteSymbol(symbol);
         writer.Flush();
-        assert(os.str() == "01");
+        ans += static_cast<char>(38);
+        assert(os.str() == ans);
+        ans.clear();
     }
     {
         std::ostringstream os;
         Writer writer(os);
-        Symbol symbol("001010");
+        Symbol symbol("1100");  // 1100 -> 11000000 = 192
         writer.WriteSymbol(symbol);
         writer.Flush();
-        assert(os.str() == "010100");
+        ans += static_cast<char>(192);
+        assert(os.str() == ans);
+        ans.clear();
     }
     {
         std::ostringstream os;
         Writer writer(os);
         Symbol symbol(
             "00101011"
-            "1110001");
+            "001001");  //  00101011 = 43, 001001 -> 00100100 = 36
         writer.WriteSymbol(symbol);
         writer.Flush();
-        assert(os.str() ==
-               "11010100"
-               "1000111");
+        ans += static_cast<char>(43);
+        ans += static_cast<char>(36);
+        assert(os.str() == ans);
     }
     {
         std::stringstream ss;
@@ -139,12 +146,15 @@ void TestIO() {
         reader.ReadSymbol(symbol, 8u);
         assert(symbol == Symbol("01100001"));
     }
-
-    //    assert(symbol == Symbol(2));
 }
 
 void Test() {
     TestCLA();
     TestIO();
+
+    /*
+     * Usage: #inlclude "my_tests.h" in archiver.cpp
+     * call Test(); in main()
+     */
 }
 // ENDNOLINT
