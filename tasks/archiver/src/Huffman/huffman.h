@@ -6,7 +6,7 @@
 #include "unordered_map"
 #include "memory"
 
-class Huffman{
+class Huffman {
 
 protected:
     Huffman();
@@ -14,10 +14,8 @@ protected:
     std::unordered_map<Symbol, Symbol> coded_symbol_;
     std::vector<Symbol> ordered_symbols_;
 
-
     size_t symbols_count_ = 0u;
     size_t max_code_size_ = 0u;
-
 
     struct Trie {
         Trie();

@@ -15,7 +15,7 @@ private:
         Multiple,
     };
 
-    struct ArgumentHolder{
+    struct ArgumentHolder {
         char short_name;
         std::string long_name;
         std::string help;
@@ -31,10 +31,10 @@ public:
     explicit CLAParser(const std::string program_info);
 
     void AddUniqueArgument(char short_name, const std::string& long_name, const std::string& type,
-                     const std::string& help, std::string* store_to);
+                           const std::string& help, std::string* store_to);
 
     void AddMultipleArgument(char short_name, const std::string& long_name, const std::string& type,
-                           const std::string& help, std::string* store_to, std::vector<std::string>* store_vec_to);
+                             const std::string& help, std::string* store_to, std::vector<std::string>* store_vec_to);
 
     void AddFlag(char short_name, const std::string& long_name, const std::string& help);
 

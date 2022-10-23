@@ -6,7 +6,7 @@
 #include <vector>
 #include <string>
 
-class Symbol{
+class Symbol {
 public:
     Symbol();
     explicit Symbol(size_t x);
@@ -39,9 +39,9 @@ public:
     char ToChar();
 };
 
-template<>
-struct std::hash<Symbol>{
-    size_t operator()(const Symbol& symbol) const{
+template <>
+struct std::hash<Symbol> {
+    size_t operator()(const Symbol& symbol) const {
         return std::hash<std::vector<bool>>{}(symbol.bit_seq_);
     }
 };

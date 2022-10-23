@@ -5,7 +5,7 @@
 #include "../init.h"
 #include "istream"
 
-class Reader{
+class Reader {
 public:
     explicit Reader(std::istream& input);
 

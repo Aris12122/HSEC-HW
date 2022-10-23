@@ -7,7 +7,7 @@
 #include "../IO/reader.h"
 #include "huffman.h"
 
-class Decoder : public Huffman{
+class Decoder : public Huffman {
 public:
     explicit Decoder(Reader& reader);
 
@@ -24,6 +24,7 @@ public:
     void PrintDecoded(Writer& writer);
 
     ~Decoder();
+
 private:
     Reader& reader_;
 

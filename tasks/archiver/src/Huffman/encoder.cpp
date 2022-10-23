@@ -29,13 +29,12 @@ void Encoder::Encode() {
     }
 
     std::vector<std::pair<size_t, Symbol>> symbol_freq_vec;
-    for (const auto &[symbol, cnt] : frequency_) {
+    for (const auto& [symbol, cnt] : frequency_) {
         symbol_freq_vec.emplace_back(cnt, symbol);
     }
-    std::sort(symbol_freq_vec.begin(), symbol_freq_vec.end(),
-              [](const auto& less, const auto& greater) {
-                  return std::tie(less.first, less.second) < std::tie(greater.first, greater.second);
-              });
+    std::sort(symbol_freq_vec.begin(), symbol_freq_vec.end(), [](const auto& less, const auto& greater) {
+        return std::tie(less.first, less.second) < std::tie(greater.first, greater.second);
+    });
 
     typedef std::pair<size_t, std::unique_ptr<Trie>> PairCntTrie;
 
@@ -48,9 +47,9 @@ void Encoder::Encode() {
 
     auto get_min = [](std::queue<PairCntTrie>& symbol_freq, std::queue<PairCntTrie>& word_freq) {
         PairCntTrie result;
-        if (word_freq.empty() || (!symbol_freq.empty() &&
-                                  std::tie(symbol_freq.front().first, symbol_freq.front().second->symbol)  <
-                                  std::tie(word_freq.front().first, word_freq.front().second->symbol))) {
+        if (word_freq.empty() ||
+            (!symbol_freq.empty() && std::tie(symbol_freq.front().first, symbol_freq.front().second->symbol) <
+                                         std::tie(word_freq.front().first, word_freq.front().second->symbol))) {
             result = std::move(symbol_freq.front());  // move
             symbol_freq.pop();
         } else {
@@ -60,7 +59,7 @@ void Encoder::Encode() {
         return result;
     };
 
-    while(symbol_freq.size() + word_freq.size() > 1u) {
+    while (symbol_freq.size() + word_freq.size() > 1u) {
         PairCntTrie min1 = get_min(symbol_freq, word_freq);
         PairCntTrie min2 = get_min(symbol_freq, word_freq);
 
@@ -69,7 +68,8 @@ void Encoder::Encode() {
             mn_symbol = min2.second->symbol;
         }
 
-        PairCntTrie to_add = {min1.first + min2.first, std::make_unique<Trie>(mn_symbol, min1.second.release(), min2.second.release())};
+        PairCntTrie to_add = {min1.first + min2.first,
+                              std::make_unique<Trie>(mn_symbol, min1.second.release(), min2.second.release())};
         word_freq.push(std::move(to_add));
     }
     PairCntTrie last = get_min(symbol_freq, word_freq);
@@ -119,7 +119,8 @@ void Encoder::PrintEncoded(Reader& reader, Writer& writer) {
     }
 }
 
-void Encoder::GetLeafs(std::unique_ptr<Trie>& vertex, std::vector<std::pair<size_t, Symbol>>& leafs_len_symbol, size_t len) {
+void Encoder::GetLeafs(std::unique_ptr<Trie>& vertex, std::vector<std::pair<size_t, Symbol>>& leafs_len_symbol,
+                       size_t len) {
     if (vertex == NULL) {
         return;
     }

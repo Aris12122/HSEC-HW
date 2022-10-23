@@ -6,7 +6,7 @@
 #include <ostream>
 #include "../init.h"
 
-class Writer{
+class Writer {
 public:
     explicit Writer(std::ostream& output);
 
@@ -17,6 +17,7 @@ public:
     void Flush();
 
     ~Writer();
+
 private:
     void Print();
 

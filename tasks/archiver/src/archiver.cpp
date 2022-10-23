@@ -9,15 +9,15 @@
 int main(int argc, char** argv) {
     try {
         // обработка аргументов
-        CLAParser args("A program for compressing multiple files and decompressing a single file using the Huffman algorithm.\n"
-                       "Performed by Mikhail Tropin (Aris)");
+        CLAParser args(
+            "A program for compressing multiple files and decompressing a single file using the Huffman algorithm.\n"
+            "Performed by Mikhail Tropin (Aris)");
         std::vector<std::string> input_files;
         std::string output_file;
         std::string archive_file;
 
         args.AddMultipleArgument('c', "compress", "archive_name file1 [file2 ...]",
-                               "compress files file1 [file2..] to file archive_name",
-                               &output_file, &input_files);
+                                 "compress files file1 [file2..] to file archive_name", &output_file, &input_files);
         args.AddUniqueArgument('d', "decompress", "archive_name", "decompress file archive_name", &archive_file);
         args.AddFlag('h', "help", "Prints help message with usage");
 
@@ -39,7 +39,8 @@ int main(int argc, char** argv) {
                 throw InvalidArguments();
             }
             if (input_files.empty()) {
-                std::cerr << "Expected at least one input_file for compression but zero found" << std::endl; throw InvalidArguments();
+                std::cerr << "Expected at least one input_file for compression but zero found" << std::endl;
+                throw InvalidArguments();
             }
             std::ofstream output(output_file, std::ios::binary);
             if (!output) {

@@ -11,4 +11,3 @@ static const size_t BUFFER_SIZE = 8u;
 static const Symbol FILENAME_END = Symbol(256u);
 static const Symbol ONE_MORE_FILE = Symbol(257u);
 static const Symbol ARCHIVE_END = Symbol(258u);
-

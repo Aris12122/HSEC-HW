@@ -2,7 +2,6 @@ add_executable(
         archiver
         archiver.cpp
         CLA/cla_parser.h CLA/cla_parser.cpp
-        my_tests.h
         init.h
         Symbol/symbol.h Symbol/symbol.cpp
         IO/reader.h IO/reader.cpp

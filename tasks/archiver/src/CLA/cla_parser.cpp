@@ -9,7 +9,7 @@ CLAParser::CLAParser(const std::string program_info) : program_info_(program_inf
 }
 void CLAParser::AddUniqueArgument(char short_name, const std::string& long_name, const std::string& type,
                                   const std::string& help, std::string* store_to) {
-    args_.emplace_back(ArgumentHolder {
+    args_.emplace_back(ArgumentHolder{
         .short_name = short_name,
         .long_name = long_name,
         .help = help,
@@ -17,12 +17,12 @@ void CLAParser::AddUniqueArgument(char short_name, const std::string& long_name,
         .to_perform = false,
         .type = type,
         .argument_value = store_to,
-            });
+    });
 }
 void CLAParser::AddMultipleArgument(char short_name, const std::string& long_name, const std::string& type,
                                     const std::string& help, std::string* store_to,
                                     std::vector<std::string>* store_vec_to) {
-    args_.emplace_back(ArgumentHolder {
+    args_.emplace_back(ArgumentHolder{
         .short_name = short_name,
         .long_name = long_name,
         .help = help,
@@ -31,10 +31,10 @@ void CLAParser::AddMultipleArgument(char short_name, const std::string& long_nam
         .type = type,
         .argument_value = store_to,
         .argument_values = store_vec_to,
-            });
+    });
 }
 void CLAParser::AddFlag(char short_name, const std::string& long_name, const std::string& help) {
-    args_.emplace_back(ArgumentHolder {
+    args_.emplace_back(ArgumentHolder{
         .short_name = short_name,
         .long_name = long_name,
         .help = help,
@@ -69,12 +69,12 @@ void CLAParser::Parse(int argc, char** argv) {
         }
         bool found = false;
         for (auto& argument : args_) {
-            if ((argv[pos] == "-" + std::string(1, argument.short_name)) ||
-                (argv[pos] == "--" + argument.long_name)) {
+            if ((argv[pos] == "-" + std::string(1, argument.short_name)) || (argv[pos] == "--" + argument.long_name)) {
 
                 found = true;
                 if (argument.to_perform) {
-                    std::cerr << "Each argument expected no more than once, but " << argument.long_name << " found twice" << std::endl;
+                    std::cerr << "Each argument expected no more than once, but " << argument.long_name
+                              << " found twice" << std::endl;
                     throw InvalidArguments();
                 }
                 argument.to_perform = true;

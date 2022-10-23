@@ -3,7 +3,7 @@
 //
 #include "writer.h"
 
-Writer::Writer(std::ostream& output): output_(output), len_(BUFFER_SIZE) {
+Writer::Writer(std::ostream& output) : output_(output), len_(BUFFER_SIZE) {
 }
 void Writer::WriteSymbol(const Symbol& symbol) {
     for (size_t i = 0; i < symbol.Size(); ++i) {
@@ -20,11 +20,11 @@ Writer::~Writer() {
     Flush();
 }
 void Writer::Print() {
-    char out = 0;
+    int out = 0;
     for (size_t i = 0; i < BUFFER_SIZE; ++i) {
         out |= buff_[i] << i;
     }
-    output_ << out;
+    output_ << static_cast<char>(out);
     buff_.reset();
     len_ = BUFFER_SIZE;
 }

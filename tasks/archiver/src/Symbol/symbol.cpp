@@ -15,7 +15,7 @@ Symbol::Symbol(size_t x) {
     }
     std::reverse(bit_seq_.begin(), bit_seq_.end());
 }
-Symbol::Symbol(const std::vector<bool>& vb): bit_seq_(vb) {
+Symbol::Symbol(const std::vector<bool>& vb) : bit_seq_(vb) {
 }
 Symbol::Symbol(const Symbol& other, size_t len) {
     bit_seq_ = other.bit_seq_;
@@ -40,10 +40,10 @@ Symbol::Symbol(const std::string& b_str) {
         bit_seq_[i] = static_cast<bool>(b_str[i] - '0');
     }
 }
-Symbol::Symbol(size_t x, size_t len): Symbol(x) {
+Symbol::Symbol(size_t x, size_t len) : Symbol(x) {
     bit_seq_.resize(len);
     for (size_t i = len; i > 0; --i) {
-        bit_seq_[i-1] = x & 1;
+        bit_seq_[i - 1] = x & 1;
         x >>= 1;
     }
     if (x > 0) {
@@ -90,10 +90,10 @@ void Symbol::Add(bool x) {
 Symbol& Symbol::operator++() {
     bool added = false;
     for (size_t i = bit_seq_.size(); i > 0; --i) {
-        if (bit_seq_[i-1]) {
-            bit_seq_[i-1] = false;
+        if (bit_seq_[i - 1]) {
+            bit_seq_[i - 1] = false;
         } else {
-            bit_seq_[i-1] = true;
+            bit_seq_[i - 1] = true;
             added = true;
             break;
         }
@@ -134,4 +134,3 @@ std::vector<Symbol> TransformFileName(const std::string& file_name) {
     }
     return TransformString(file_name.substr(begin, file_name.size() - begin));
 }
-

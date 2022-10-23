@@ -3,7 +3,7 @@
 //
 #include "reader.h"
 
-Reader::Reader(std::istream& input): input_(input) {
+Reader::Reader(std::istream& input) : input_(input) {
     buff_ = 0;
     cur_pos_ = 0u;
 }

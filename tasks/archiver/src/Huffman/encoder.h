@@ -8,8 +8,7 @@
 #include "../init.h"
 #include <memory>
 
-
-class Encoder : public Huffman{
+class Encoder : public Huffman {
 public:
     Encoder();
 
@@ -28,7 +27,8 @@ public:
 private:
     void ToCanonical();
 
-    void GetLeafs(std::unique_ptr<Trie>& vertex, std::vector<std::pair<size_t, Symbol>>& len_symbol_vec, size_t len = 0);
+    void GetLeafs(std::unique_ptr<Trie>& vertex, std::vector<std::pair<size_t, Symbol>>& len_symbol_vec,
+                  size_t len = 0);
 
     std::unordered_map<Symbol, size_t> frequency_;
 };

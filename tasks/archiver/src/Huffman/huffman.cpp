@@ -9,7 +9,7 @@ void Huffman::BuildTrie(std::vector<std::pair<Symbol, Symbol>> symbol_code) {
         TrieAddSymbol(root, code, symbol);
     }
 }
-void Huffman::TrieAddSymbol(std::unique_ptr<Trie>& vertex, const Symbol &code, const Symbol symbol, size_t pos) {
+void Huffman::TrieAddSymbol(std::unique_ptr<Trie> &vertex, const Symbol &code, const Symbol symbol, size_t pos) {
     if (!vertex) {
         vertex = std::make_unique<Trie>();
     }
@@ -27,19 +27,15 @@ Huffman::Huffman() {
 bool Huffman::IsLeaf(std::unique_ptr<Trie> &vertex) {
     return vertex->left == NULL && vertex->right == NULL;
 }
-Huffman::Trie::Trie(const Symbol& symbol): symbol(symbol) {
+Huffman::Trie::Trie(const Symbol &symbol) : symbol(symbol) {
 }
-Huffman::Trie::Trie(const Symbol& symbol, Huffman::Trie *l, Huffman::Trie *r)
-    :symbol(symbol), left(l), right(r){
-
+Huffman::Trie::Trie(const Symbol &symbol, Huffman::Trie *l, Huffman::Trie *r) : symbol(symbol), left(l), right(r) {
 }
-Huffman::Trie::Trie(Huffman::Trie *l, Huffman::Trie *r)
-    :left(l), right(r) {
+Huffman::Trie::Trie(Huffman::Trie *l, Huffman::Trie *r) : left(l), right(r) {
 }
 Huffman::Trie::~Trie() {
     left.reset();
     right.reset();
 }
 Huffman::Trie::Trie() {
-
 }

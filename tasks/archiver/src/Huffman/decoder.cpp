@@ -5,7 +5,7 @@
 #include "../Exceptions/exceptions.h"
 #include "decoder.h"
 
-Decoder::Decoder(Reader& reader): reader_(reader) {
+Decoder::Decoder(Reader& reader) : reader_(reader) {
 }
 void Decoder::ReadTrieData() {
     Symbol read;
