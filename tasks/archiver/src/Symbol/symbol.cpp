@@ -18,15 +18,14 @@ Symbol::Symbol(size_t x) {
 Symbol::Symbol(const std::vector<bool>& vb): bit_seq_(vb) {
 }
 Symbol::Symbol(const Symbol& other, size_t len) {
-    if (len < other.Size()) {
-        std::cerr << "Cannot create Symbol from other symbol with len less than other symbol len" << std::endl;
-        throw IllegalStateException();
-    }
     bit_seq_ = other.bit_seq_;
-    if (bit_seq_.size() < len) {
+    if (bit_seq_.size() != len) {
         std::reverse(bit_seq_.begin(), bit_seq_.end());
         while (bit_seq_.size() < len) {
             bit_seq_.emplace_back(false);
+        }
+        while (bit_seq_.size() > len) {
+            bit_seq_.pop_back();
         }
         std::reverse(bit_seq_.begin(), bit_seq_.end());
     }
@@ -106,6 +105,17 @@ Symbol& Symbol::operator++() {
 }
 void Symbol::Clear() {
     bit_seq_.clear();
+}
+size_t Symbol::ToInt() {
+    size_t result = 0;
+    for (size_t i = 0; i < Size(); ++i) {
+        result <<= 1;
+        result += bit_seq_[i];
+    }
+    return result;
+}
+char Symbol::ToChar() {
+    return static_cast<char>(ToInt());
 }
 std::vector<Symbol> TransformString(const std::string& str) {
     std::vector<Symbol> result;

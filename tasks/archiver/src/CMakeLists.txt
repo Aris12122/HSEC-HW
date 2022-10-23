@@ -9,4 +9,5 @@ add_executable(
         IO/writer.h IO/writer.cpp
         Huffman/encoder.h Huffman/encoder.cpp
         Huffman/huffman.h Huffman/huffman.cpp
+        Huffman/decoder.h Huffman/decoder.cpp
 )

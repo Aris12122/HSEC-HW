@@ -4,6 +4,7 @@
 #include "IO/writer.h"
 #include "IO/reader.h"
 #include "Huffman/encoder.h"
+#include "Huffman/decoder.h"
 
 int main(int argc, char** argv) {
     try {
@@ -40,7 +41,7 @@ int main(int argc, char** argv) {
             if (input_files.empty()) {
                 std::cerr << "Expected at least one input_file for compression but zero found" << std::endl; throw InvalidArguments();
             }
-            std::ofstream output = std::ofstream(output_file, std::ios::binary);
+            std::ofstream output(output_file, std::ios::binary);
             if (!output) {
                 std::cerr << "Cannot open output_file : " << output_file << std::endl;
                 throw IOSException();
@@ -56,7 +57,7 @@ int main(int argc, char** argv) {
                     encoder.Add(TransformFileName(input_file));
                     encoder.Add(FILENAME_END);
 
-                    std::ifstream input(input_file.c_str(), std::ios::binary);
+                    std::ifstream input(input_file, std::ios::binary);
                     if (!input) {
                         std::cerr << "Cannot open input_file : " << input_file << std::endl;
                         throw IOSException();
@@ -87,11 +88,34 @@ int main(int argc, char** argv) {
                 }
             }
         } else if (args.ToPerform("decompress")) {
+            std::ifstream input(archive_file, std::ios::binary);
+            if (!input) {
+                std::cerr << "Cannot open archive_file : " << archive_file << std::endl;
+                throw IOSException();
+            }
+            Reader reader(input);
 
+            while (true) {
+                Decoder decoder(reader);
+                decoder.ReadTrieData();
+                decoder.Decode();
+                output_file = decoder.ReadFileName();
+                std::ofstream output(output_file, std::ios::binary);
+                if (!output) {
+                    std::cerr << "Cannot open output_file : " << output_file << std::endl;
+                    throw IOSException();
+                }
+                Writer writer(output);
+                decoder.PrintDecoded(writer);
+                if (decoder.ArchiveEnd()) {
+                    break;
+                }
+            }
         } else {
-            std::cerr << "Expected exactly one argument but zero found" << std::endl;
-            throw InvalidArguments();
+            args.PrintHelpMessages(std::cout);
         }
+    } catch (IOSException e) {
+        std::cerr << "Input/Output Exception occurred" << std::endl;
     } catch (InvalidArguments e) {
         std::cerr << "Invalid Argument Exception occurred" << std::endl;
         return 111;

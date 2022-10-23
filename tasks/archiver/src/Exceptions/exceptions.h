@@ -5,13 +5,14 @@
 #include "exception"
 #include "iostream"
 
-class IOSException : std::exception{
-};
-
-class IllegalStateException : std::exception{
+class IOSException : public std::exception{
 
 };
 
-class InvalidArguments : std::exception{
+class IllegalStateException : public std::exception{
+
+};
+
+class InvalidArguments : public std::exception{
 
 };

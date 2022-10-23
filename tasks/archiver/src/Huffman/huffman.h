@@ -10,6 +10,14 @@ class Huffman{
 
 protected:
     Huffman();
+    std::unordered_map<size_t, size_t> num_code_size_;
+    std::unordered_map<Symbol, Symbol> coded_symbol_;
+    std::vector<Symbol> ordered_symbols_;
+
+
+    size_t symbols_count_ = 0u;
+    size_t max_code_size_ = 0u;
+
 
     struct Trie {
         Trie();

@@ -5,23 +5,22 @@
 
 Reader::Reader(std::istream& input): input_(input) {
     buff_ = 0;
-    cur_pos_ = BUFFER_SIZE;
+    cur_pos_ = 0u;
 }
 
 bool Reader::ReadSymbol(Symbol& symbol, size_t len) {
     for (size_t i = 0; i < len; ++i) {
         symbol.bit_seq_.emplace_back(ReadBit());
     }
-    symbol.Reverse();
     return input_.good();
 }
 bool Reader::ReadBit() {
-    if (cur_pos_ == BUFFER_SIZE) {
+    if (cur_pos_ == 0u) {
         buff_ = 0;
         if (input_.good()) {
             input_.read(&buff_, 1u);
         }
-        cur_pos_ = 0u;
+        cur_pos_ = BUFFER_SIZE;
     }
-    return (buff_ >> cur_pos_++) & 1;
+    return (buff_ >> (--cur_pos_)) & 1;
 }

@@ -35,6 +35,8 @@ public:
     bool operator[](size_t pos) const;
 
     std::vector<bool> bit_seq_;
+    size_t ToInt();
+    char ToChar();
 };
 
 template<>
