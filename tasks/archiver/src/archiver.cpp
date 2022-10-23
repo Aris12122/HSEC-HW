@@ -112,8 +112,6 @@ int main(int argc, char** argv) {
                     break;
                 }
             }
-        } else {
-            args.PrintHelpMessages(std::cout);
         }
     } catch (IOSException e) {
         std::cerr << "Input/Output Exception occurred" << std::endl;

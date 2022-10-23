@@ -23,5 +23,5 @@ private:
 
     std::ostream& output_;
     size_t len_;
-    std::bitset<BUFFER_SIZE> buff_;
+    int buff_;
 };
