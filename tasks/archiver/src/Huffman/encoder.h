@@ -30,5 +30,5 @@ private:
     void GetLeafs(std::unique_ptr<Trie>& vertex, std::vector<std::pair<size_t, Symbol>>& len_symbol_vec,
                   size_t len = 0);
 
-    std::map<Symbol, size_t> frequency_;
+    std::unordered_map<Symbol, size_t> frequency_;
 };

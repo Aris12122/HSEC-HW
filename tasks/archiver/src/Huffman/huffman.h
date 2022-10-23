@@ -3,7 +3,6 @@
 //
 #pragma once
 #include "../Symbol/symbol.h"
-#include <map>
 #include <unordered_map>
 #include <memory>
 
@@ -12,7 +11,7 @@ class Huffman {
 protected:
     Huffman();
     std::vector<size_t> num_code_size_;
-    std::map<Symbol, Symbol> coded_symbol_;
+    std::unordered_map<Symbol, Symbol> coded_symbol_;
     std::vector<Symbol> ordered_symbols_;
 
     size_t symbols_count_ = 0u;
